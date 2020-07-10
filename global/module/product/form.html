@@ -1,0 +1,71 @@
+<html>
+<header>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"
+        integrity="sha512-suUtSPkqYmFd5Ls30Nz6bjDX+TCcfEzhFfqjijfdggsaFZoylvTj+2odBzshs0TCwYrYZhQeCgHgJEkncb2YVQ=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../assets/css/main.css" type="text/css" media="all">
+</header>
+
+<body>
+    <div class="container">
+        <div class="background_form">
+            <div class="tittle">
+                <h2>Cadastro de Produtos</h2>
+                <button><a href="../../index.html">Home</a></button>
+                <button><a href="../../index.html">Home</a></button>
+                <button><a href="./index.html">Todos os Produtos</a></button>
+            </div>
+
+            <div class="form">
+                <form>
+
+                    <input type="text" id="nm_product" required="required">
+                    <input type="text" id="vl_price">
+                    <input type="submit" onclick="insert(event)" val="CADASTRAR">
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    function insert(event) {
+
+        event.preventDefault();
+
+        var formData = new FormData();
+
+        formData.append('nm_product', $('#nm_product').val());
+        formData.append('vl_price', $('#vl_price').val());
+
+        $.ajax({
+            url: './controller/insert.php',
+            type: 'POST',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (response) {
+                console.log("sucess", response.statusText);
+
+                if (response == true) {
+                    window.location.href = "./index.html";
+                }
+                
+            }, error: function (response, status, error) {
+                console.log("response", response);
+                console.log("status", status);
+                console.log("error", error);
+            }
+        });
+
+    };
+
+</script>

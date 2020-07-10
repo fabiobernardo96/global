@@ -1,0 +1,72 @@
+.container{
+    width: auto;
+    height: 100%;
+    padding: 5%;
+}
+
+.form{
+    display: grid;
+}
+
+.form > form {
+    display: grid;
+    width: 30rem;
+    margin: auto;
+}
+
+.form > form > input {
+    margin: 2% auto;
+    width: 100%;
+    height: 3rem;
+}
+
+.tittle {
+    text-align: center;
+    margin: auto;
+    font-size: 3rem;
+}
+
+.background_form {
+    background-color: #ebebeb;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px 5px #0000002e;
+    padding: 5% 0;
+}
+
+table, th, td {
+    border: 1px solid black;
+    text-align: center;
+  }
+  table.center {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+#table_customer{
+    width: 80%;
+    margin: 10% auto;
+}
+
+.buttons > a {
+    width: auto;
+    background: #fff;
+    padding: 4%;
+    border-radius: 15px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 2rem;
+    box-shadow: 0px 0px 10px 5px #0000002e;
+    color: #666;
+    margin: 0 1%;
+}
+
+.buttons {
+    text-align: center;
+    padding: 5rem 0;
+}
+
+.footer_table {
+    display: grid;
+    text-align: center;
+    margin: auto;
+}

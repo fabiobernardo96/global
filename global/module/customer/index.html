@@ -1,0 +1,146 @@
+<html>
+<header>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"
+        integrity="sha512-suUtSPkqYmFd5Ls30Nz6bjDX+TCcfEzhFfqjijfdggsaFZoylvTj+2odBzshs0TCwYrYZhQeCgHgJEkncb2YVQ=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../assets/css/main.css" type="text/css" media="all">
+</header>
+
+<body>
+    <div class="container">
+        <div class="background_form">
+            <div class="tittle">
+                <h2>Clientes</h2>
+                <div>
+                    <button><a href="../../index.html">Home</a></button>
+                    <button onclick="allCustomer()">Listar Todos os Clientes</button>
+                    <button><a href="./form.html">Cadastrar Novo Cliente</a></button>
+                </div>
+            </div>
+
+            <div class="form">
+                <table id="table_customer">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Cpf / Cnpj</th>
+                            <th>Editar</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body_table">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+</body>
+
+</html>
+
+<script>
+
+    function insert(event) {
+
+        event.preventDefault();
+
+        var formData = new FormData();
+
+        formData.append('nm_name', $('#nm_name').val());
+        formData.append('nr_cpf_cnpj', $('#nr_cpf_cnpj').val());
+
+        $.ajax({
+            url: './controller/select.php',
+            type: 'POST',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (response) {
+                console.log("sucess", response);
+            }, error: function (response, status, error) {
+                console.log("response", response);
+                console.log("status", status);
+                console.log("error", error);
+            }
+        });
+
+    };
+
+    function excluir(id) {
+
+        var formData = new FormData();
+
+        formData.append('id_customer', id);
+
+        $.ajax({
+            url: './controller/delete.php',
+            type: 'POST',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (response) {
+
+                console.log("sucess", response.statusText);
+
+                if (response == true) {
+                    allCustomer();
+                }
+
+            }, error: function (response, status, error) {
+                console.log("response", response);
+                console.log("status", status);
+                console.log("error", error);
+            }
+        });
+
+    }
+
+    function allCustomer() {
+
+        $.ajax({
+            url: './controller/select.php',
+            type: 'GET',
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (response) {
+
+                $('#body_table').html('');
+
+                $.each(response, function (key, iten) {
+
+                    $('#body_table').append(`
+                    <tr>
+                    <td>${iten.nm_name}</td >
+                    <td>${iten.nr_cpf_cnpj}</td>
+                    <td><button><a href="./update.html?id_customer=${iten.id_customer}">Editar</a></button></td>
+                    <td><button onclick="excluir(${iten.id_customer})">Excluir</button></td>
+                    </tr >
+
+                    `);
+
+                });
+
+
+            }, error: function (response, status, error) {
+                console.log("response", response);
+                console.log("status", status);
+                console.log("error", error);
+            }
+        });
+
+    }
+
+</script>

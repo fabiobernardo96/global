@@ -1,0 +1,85 @@
+<html>
+<header>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"
+        integrity="sha512-suUtSPkqYmFd5Ls30Nz6bjDX+TCcfEzhFfqjijfdggsaFZoylvTj+2odBzshs0TCwYrYZhQeCgHgJEkncb2YVQ=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../assets/css/main.css" type="text/css" media="all">
+</header>
+
+<body>
+    <div class="container">
+        <div class="background_form">
+            <div class="tittle">
+                <h2>Editar Produto</h2>
+                <button><a href="../../index.html">Home</a></button>
+                <button><a href="./index.html">Todos os Produtos</a></button>
+            </div>
+
+            <div class="form">
+                <form>
+
+                    <input type="text" id="nm_product" required="required">
+                    <input type="text" id="vl_price" required="required">
+                    <input type="submit" onclick="update(event)" val="Atualizar">
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    var getParams = function (url) {
+        var params = {};
+        var parser = document.createElement('a');
+        parser.href = url;
+        var query = parser.search.substring(1);
+        var vars = query.split('&');
+        for (var i = 0; i < vars.length; i++) {
+            var pair = vars[i].split('=');
+            params[pair[0]] = decodeURIComponent(pair[1]);
+        }
+        return params;
+    };
+
+    function update(event) {
+
+        event.preventDefault();
+
+        var formData = new FormData();
+
+        formData.append('id_product', getParams(window.location.href).id_product);
+        formData.append('nm_product', $('#nm_product').val());
+        formData.append('vl_price', $('#vl_price').val());
+
+        $.ajax({
+            url: './controller/update.php',
+            type: 'POST',
+            dataType: 'json',
+            data: formData,
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (response) {
+
+                console.log("sucess", response.statusText);
+
+                if (response == true) {
+                    window.location.href = "./index.html";
+                }
+
+            }, error: function (response, status, error) {
+                console.log("response", response);
+                console.log("status", status);
+                console.log("error", error);
+            }
+        });
+
+    };
+
+</script>

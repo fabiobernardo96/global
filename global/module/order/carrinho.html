@@ -1,0 +1,88 @@
+<html>
+<header>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.0/jquery.min.js"
+        integrity="sha512-suUtSPkqYmFd5Ls30Nz6bjDX+TCcfEzhFfqjijfdggsaFZoylvTj+2odBzshs0TCwYrYZhQeCgHgJEkncb2YVQ=="
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../../assets/css/main.css" type="text/css" media="all">
+</header>
+
+<body>
+    <div class="container">
+        <div class="background_form">
+            <div class="tittle">
+                <h2>Prdutos</h2>
+                <div>
+                    <button><a href="../../index.html">Home</a></button>
+                    <button onclick="allProduct()">Listar Todos os Produtos</button>
+                </div>
+            </div>
+
+            <div class="form">
+                <table id="table_customer">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Preço</th>
+                            <th>Adquirir Produto</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body_table">
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <div class="footer_table">
+                    <strong>Valor total do Pedido: R$<strong id="price"></strong>00,00</strong>
+                    <button>Finalizar Pedido</button>
+                </div>
+            </div>
+        </div>
+
+</body>
+
+</html>
+
+<script>
+
+    function allProduct() {
+
+        $.ajax({
+            url: '../product/controller/select.php',
+            type: 'GET',
+            dataType: 'json',
+            processData: false,
+            contentType: false,
+            async: false,
+            success: function (response) {
+
+                $('#body_table').html('');
+
+                $.each(response, function (key, iten) {
+
+                    $('#body_table').append(`
+                    <tr>
+                    <td>${iten.nm_product}</td >
+                    <td>${iten.vl_price}</td>
+                    <td><input type="checkbox" name="${iten.id_product}">
+                    </tr >
+
+                    `);
+
+                });
+
+
+            }, error: function (response, status, error) {
+                console.log("response", response);
+                console.log("status", status);
+                console.log("error", error);
+            }
+        });
+
+    }
+
+</script>

@@ -1,14 +1,14 @@
 <?php
 
-include_once('../../../com/global/php/dao/customerDAO.php');
+include_once('../../../com/global/php/dao/orderDAO.php');
 
 header("Content-Type: Application/json");
 
-$customerDao = new CustomerDAO();
-$customer = new Customer();
+$orderDao = new OrderDAO();
+$order = new Order();
 
-$customer->setNmName($_POST['nm_name']);
-$customer->setNrCpfCnpj($_POST['nr_cpf_cnpj']);
+$order->setYnFinished($_POST['yn_finished']);
+$order->setIdCustomer($_POST['id_customer']);
 
 // var_dump($customer);
-echo json_encode($customerDao->insert($customer));
+echo json_encode($orderDao->insert($order));
